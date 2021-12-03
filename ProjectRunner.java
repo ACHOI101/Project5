@@ -4,6 +4,7 @@ import java.text.ParseException;
  * Project Runner
  * 
  * @author achoi
+ * @author wbogusz24
  * @version 11/19/2021
  * 
  *
