@@ -1,3 +1,5 @@
+package prj5;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -47,9 +49,6 @@ public class GUI<T> {
         window = new Window();
 
         // Uses the user's screen dimensions to set initial window size
-        // This is something that I (Andrew Choi) thought of so if it doesn't do
-        // well
-        // just penalize me please
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int userWidth = (int)screenSize.getWidth();
         int userHeight = (int)screenSize.getHeight() - 30;
@@ -77,11 +76,11 @@ public class GUI<T> {
      * 
      */
     public void buildStateButtons() {
-        Iterator<LinkedList<T>> state_ll_iter = caseReader.getStateLinkedLists()
+        Iterator<LinkedList<T>> state_iterator = caseReader.getStateLinkedLists()
             .iterator();
 
-        while (state_ll_iter.hasNext()) {
-            String state_name = state_ll_iter.next().getStateName();
+        while (state_iterator.hasNext()) {
+            String state_name = state_iterator.next().getStateName();
             Button genericStateBtn = new Button("Represent " + state_name);
             genericStateBtn.onClick(this, "clickedStateButton");
             Object[] buttonSet = { state_name, genericStateBtn };
@@ -92,7 +91,7 @@ public class GUI<T> {
 
 
     /**
-     * State Button 
+     * Show the bar graphs for the state clicked on
      * 
      * @param button
      *            that was clicked for a specific state
@@ -122,12 +121,12 @@ public class GUI<T> {
 
 
     /**
-     * Sorts list by race CFR
+     * Sorts the active list by race CFR
      * 
      * @param button
      *            that was clicked
      */
-    public void sortActiveListCFR(Button button) {
+    public void sortListCFR(Button button) {
         clearAllShapes();
         activeList.sortByCFR();
         buildBarGraphs(activeList.getStateName());
@@ -146,7 +145,8 @@ public class GUI<T> {
 
 
     /**
-     * Clear all the shapes
+     * Clear all the shapes from the window and reset the starting X, Y
+     * coordinates for bar graphs
      */
     private void clearAllShapes() {
         window.removeAllShapes();
@@ -159,22 +159,23 @@ public class GUI<T> {
      * Builds the bar graphs based on the data from the reader
      * 
      * @param stateName
-     *            state name 
+     *            the name of the state correlated with the dynamic
+     *            buttons clicked
      */
     public void buildBarGraphs(String stateName) {
-        Iterator<LinkedList<T>> state_ll_iter = caseReader.getStateLinkedLists()
+        Iterator<LinkedList<T>> state_iterator = caseReader.getStateLinkedLists()
             .iterator();
 
-        while (state_ll_iter.hasNext()) {
-            activeList = state_ll_iter.next();
+        while (state_iterator.hasNext()) {
+            activeList = state_iterator.next();
             if (activeList.getStateName().equals(stateName)) {
                 break;
             }
         }
 
-        Iterator<T> ll_iter = activeList.iterator();
-        while (ll_iter.hasNext()) {
-            CaseData caseData = (CaseData)ll_iter.next();
+        Iterator<T> iterator = activeList.iterator();
+        while (iterator.hasNext()) {
+            CaseData caseData = (CaseData)iterator.next();
             buildSingleBar(caseData);
         }
         // Title of graph
@@ -189,7 +190,7 @@ public class GUI<T> {
 
 
     /**
-     * Builds text shape for race
+     * Builds the text displayed with the bar graphs to indicate the details
      * 
      * @param race
      *            data used to label CFR
@@ -202,7 +203,7 @@ public class GUI<T> {
 
 
     /**
-     * Builds text shape for CFR
+     * Builds the text displayed with the bar graphs to indicate the details
      * 
      * @param cfr
      *            calculated CFR for a specific race
@@ -223,7 +224,7 @@ public class GUI<T> {
      */
     public void buildSingleBar(CaseData caseData) {
         int barHeight = (int)(caseData.getCFR() * 10);
-        if (barHeight < 0);
+        if (barHeight < 0) {
 
             // Random values for now
             TextShape shape = new TextShape(startBarX, startBarY - 50, "N/A",
