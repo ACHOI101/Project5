@@ -122,7 +122,7 @@ public class GUI<T> {
 
 
     /**
-     * Sorts the active list by race CFR
+     * Sorts list by race CFR
      * 
      * @param button
      *            that was clicked
@@ -159,8 +159,7 @@ public class GUI<T> {
      * Builds the bar graphs based on the data from the reader
      * 
      * @param stateName
-     *            the name of the state correlated with the dynamic
-     *            buttons clicked
+     *            state name 
      */
     public void buildBarGraphs(String stateName) {
         Iterator<LinkedList<T>> state_ll_iter = caseReader.getStateLinkedLists()
@@ -190,7 +189,7 @@ public class GUI<T> {
 
 
     /**
-     * Builds the text displayed with the bar graphs to indicate the details
+     * Builds text shape for race
      * 
      * @param race
      *            data used to label CFR
@@ -203,7 +202,7 @@ public class GUI<T> {
 
 
     /**
-     * Builds the text displayed with the bar graphs to indicate the details
+     * Builds text shape for CFR
      * 
      * @param cfr
      *            calculated CFR for a specific race
