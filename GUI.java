@@ -31,7 +31,7 @@ public class GUI<T> {
     private Button sortByCFR;
     private Button quit;
     private Window window;
-    private LinkedList<T> activeList;
+    private LinkedList<T> list;
     private int startBarX = 500;
     private int startBarY = 500;
 
@@ -59,9 +59,9 @@ public class GUI<T> {
         sortByAlpha = new Button("Sort By Alpha");
         quit = new Button("Quit");
         sortByCFR = new Button("Sort By CFR");
-        sortByAlpha.onClick(this, "sortActiveListAlpha");
+        sortByAlpha.onClick(this, "sortlistAlpha");
         quit.onClick(this, "quitWindow");
-        sortByCFR.onClick(this, "sortActiveListCFR");
+        sortByCFR.onClick(this, "sortlistCFR");
         window.addButton(sortByAlpha, WindowSide.NORTH);
         window.addButton(quit, WindowSide.NORTH);
         window.addButton(sortByCFR, WindowSide.NORTH);
@@ -115,8 +115,8 @@ public class GUI<T> {
      */
     public void sortListAlpha(Button button) {
         clearAllShapes();
-        activeList.sortByRace();
-        buildBarGraphs(activeList.getStateName());
+        list.sortByRace();
+        buildBarGraphs(list.getStateName());
     }
 
 
@@ -128,8 +128,8 @@ public class GUI<T> {
      */
     public void sortListCFR(Button button) {
         clearAllShapes();
-        activeList.sortByCFR();
-        buildBarGraphs(activeList.getStateName());
+        list.sortByCFR();
+        buildBarGraphs(list.getStateName());
     }
 
 
@@ -167,13 +167,13 @@ public class GUI<T> {
             .iterator();
 
         while (state_iterator.hasNext()) {
-            activeList = state_iterator.next();
-            if (activeList.getStateName().equals(stateName)) {
+            list = state_iterator.next();
+            if (list.getStateName().equals(stateName)) {
                 break;
             }
         }
 
-        Iterator<T> iterator = activeList.iterator();
+        Iterator<T> iterator = list.iterator();
         while (iterator.hasNext()) {
             CaseData caseData = (CaseData)iterator.next();
             buildSingleBar(caseData);
